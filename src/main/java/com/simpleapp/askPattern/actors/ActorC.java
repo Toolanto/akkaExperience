@@ -1,4 +1,4 @@
-package com.simpleapp.actors;
+package com.simpleapp.askPattern.actors;
 
 import com.simpleapp.guice.GuiceAbstractActor;
 import lombok.extern.slf4j.Slf4j;

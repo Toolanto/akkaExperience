@@ -1,12 +1,9 @@
-package com.simpleapp.actors;
+package com.simpleapp.askPattern.actors;
 
 import java.util.concurrent.TimeUnit;
 
-import akka.actor.ActorContext;
-import akka.actor.ActorRef;
-import akka.actor.ActorSelection;
 import akka.actor.ActorSystem;
-import com.simpleapp.actors.dto.EventIn;
+import com.simpleapp.dto.EventIn;
 import com.simpleapp.guice.GuiceAbstractActor;
 import com.google.inject.Inject;
 

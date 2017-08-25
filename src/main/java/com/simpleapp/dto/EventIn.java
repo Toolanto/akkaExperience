@@ -1,4 +1,4 @@
-package com.simpleapp.actors.dto;
+package com.simpleapp.dto;
 
 public class EventIn {
 	private final long customerId;

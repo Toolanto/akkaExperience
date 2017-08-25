@@ -1,4 +1,4 @@
-package com.simpleapp.actors;
+package com.simpleapp.askPattern.actors;
 
 
 //import static akka.pattern.PatternsCS.ask;
@@ -15,7 +15,7 @@ import akka.actor.ActorSystem;
 import akka.dispatch.Futures;
 import akka.dispatch.Mapper;
 import com.google.inject.Inject;
-import com.simpleapp.actors.dto.EventIn;
+import com.simpleapp.dto.EventIn;
 import lombok.extern.slf4j.Slf4j;
 import scala.concurrent.Future;
 
@@ -36,7 +36,7 @@ public class MasterProducerHandlerImpl implements ProducerHandler {
         LOGGER.info("New message event");
 
         final ActorSelection actorA = context.actorSelection("../ActorA");
-        final ActorSelection actorB = context.actorSelection("../ActorB");
+        final ActorSelection actorB = context.actorSelection("../ReceiverActor");
         final ActorSelection actorC = context.actorSelection("../ActorC");
 
 
@@ -75,7 +75,7 @@ public class MasterProducerHandlerImpl implements ProducerHandler {
 //
 //        final ActorSelection actorA = context.actorSelection("../ActorA");
 //
-//        final ActorSelection actorB = context.actorSelection("../ActorB");
+//        final ActorSelection actorB = context.actorSelection("../ReceiverActor");
 //
 //        final ActorSelection actorC = context.actorSelection("../ActorC");
 //
