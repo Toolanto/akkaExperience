@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 --------------------------------------------------------------------------------------------------------
 
 	Dopo il clone del progetto eseguire questo comando per aggiornare i sottomoduli
@@ -113,3 +114,7 @@
     -Dlogback.configurationFile="configuration/development/logback.xml"
     -Dconfig.file="configuration/development/application.conf
 
+=======
+# akkaExperience
+Akka example
+>>>>>>> 393207afe9dcf9dc4240eccd728d6432c271ee33
