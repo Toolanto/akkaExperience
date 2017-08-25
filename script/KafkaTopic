@@ -1,0 +1,27 @@
+
+Topic
+
+view-events
+click-events
+
+COMMAND:
+
+/usr/hdp/2.6.0.3-8/kafka/bin//kafka-topics.sh --create --topic view-events -zookeeper smart-kafka03.contactlab.dev:2181,smart-kafka01.contactlab.dev:2181,smart-kafka02.contactlab.dev:2181  --partitions 1 --replication-factor 2
+/usr/hdp/2.6.0.3-8/kafka/bin/kafka-acls.sh --add  --consumer --authorizer-properties zookeeper.connect=smart-kafka03.contactlab.dev:2181,smart-kafka01.contactlab.dev:2181,smart-kafka02.contactlab.dev:2181 --topic=view-events --allow-principal=User:hbase-smartsend --group="*"
+/usr/hdp/2.6.0.3-8/kafka/bin/kafka-acls.sh --add  --producer --authorizer-properties zookeeper.connect=smart-kafka03.contactlab.dev:2181,smart-kafka01.contactlab.dev:2181,smart-kafka02.contactlab.dev:2181 --topic=view-events --allow-principal=User:hbase-smartsend --group="*"
+
+/usr/hdp/2.6.0.3-8/kafka/bin//kafka-topics.sh --create --topic click-events -zookeeper smart-kafka03.contactlab.dev:2181,smart-kafka01.contactlab.dev:2181,smart-kafka02.contactlab.dev:2181  --partitions 1 --replication-factor 2
+/usr/hdp/2.6.0.3-8/kafka/bin/kafka-acls.sh --add  --consumer --authorizer-properties zookeeper.connect=smart-kafka03.contactlab.dev:2181,smart-kafka01.contactlab.dev:2181,smart-kafka02.contactlab.dev:2181 --topic=click-events --allow-principal=User:hbase-smartsend --group="*"
+/usr/hdp/2.6.0.3-8/kafka/bin/kafka-acls.sh --add  --producer --authorizer-properties zookeeper.connect=smart-kafka03.contactlab.dev:2181,smart-kafka01.contactlab.dev:2181,smart-kafka02.contactlab.dev:2181 --topic=click-events --allow-principal=User:hbase-smartsend --group="*"
+
+SVUOTARE UN TOPIC di TUTTI i MESSAGGI
+
+mettere la retention dei messaggi a 1 secondo ed aspettare un attimo (un minutino) e rimettere la retention
+
+./kafka-topics.sh --alter --zookeeper smart-kafka03.contactlab.dev:2181,smart-kafka01.contactlab.dev:2181,smart-kafka02.contactlab.dev:2181  --topic  view-events  --config retention.ms=1000
+./kafka-topics.sh --alter --zookeeper smart-kafka03.contactlab.dev:2181,smart-kafka01.contactlab.dev:2181,smart-kafka02.contactlab.dev:2181  --topic  click-events  --config retention.ms=1000
+
+aspettare un minuto
+
+./kafka-topics.sh --alter --zookeeper smart-kafka03.contactlab.dev:2181,smart-kafka01.contactlab.dev:2181,smart-kafka02.contactlab.dev:2181  --topic  view-events  --config retention.ms=86400000
+./kafka-topics.sh --alter --zookeeper smart-kafka03.contactlab.dev:2181,smart-kafka01.contactlab.dev:2181,smart-kafka02.contactlab.dev:2181  --topic  click-events  --config retention.ms=86400000

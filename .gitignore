@@ -1,0 +1,17 @@
+.classpath
+.project
+.settings/
+target/
+bin/
+*~
+*.log
+*/activemq-data/
+.idea/*
+*.iml
+mail-server/out
+.pydevproject
+node_modules/
+*.eml
+!.idea/codeStyleSettings.xml
+log/
+smartsend-engine/.idea/

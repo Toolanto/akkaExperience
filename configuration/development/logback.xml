@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="LOG_DIR" value="/tmp/smart-suppression" />
+
+    <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
+        <syslogHost>localhost</syslogHost>
+        <facility>LOCAL1</facility>
+        <suffixPattern>%-5level %logger{16} %X{sourceActorSystem} - %msg%n</suffixPattern>
+    </appender>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	  <encoder>
+	    <pattern>%date{ISO8601} %-5level %logger{36} %X{sourceActorSystem} - %msg%n</pattern>
+	  </encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>%date{ISO8601} %-5level %logger{36} %X{sourceActorSystem} - %msg%n</pattern>
+		</encoder>
+		<file>${LOG_DIR}/out.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/out.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>500MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<root level="INFO">
+        <appender-ref ref="SYSLOG" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+
+	<logger name="org.apache.kafka.clients.producer.ProducerConfig" level="ERROR" />
+	<logger name="org.apache.kafka.clients.consumer.ConsumerConfig" level="ERROR" />
+
+	<logger name="com.contactlab.engine.replicator" level="DEBUG" />
+	<logger name="org.apache.kafka" level="ERROR" />
+	<logger name="org.apache.zookeeper" level="ERROR" />
+	<logger name="com.contactlab.configurationservice" level="DEBUG" />
+	<logger name="com.contactlab.engine.http.HTTPStatusListener" level="INFO" />
+	<logger name="org.apache.hadoop.hbase" level="info"/>
+	<logger name="org.apache.kafka" level="info"/>
+	
+</configuration>

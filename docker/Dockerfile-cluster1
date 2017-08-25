@@ -1,0 +1,37 @@
+FROM kafka_smartsend
+RUN  /root/bin/hbase/bin/stop-hbase.sh
+RUN rm /etc/zookeeper/conf/zoo.cfg
+RUN echo "clientPort=2181" >> /etc/zookeeper/conf/zoo.cfg
+RUN echo "initLimit=10" >> /etc/zookeeper/conf/zoo.cfg
+RUN echo "autopurge.purgeInterval=24" >> /etc/zookeeper/conf/zoo.cfg
+RUN echo "syncLimit=5" >> /etc/zookeeper/conf/zoo.cfg
+RUN echo "tickTime=3000" >> /etc/zookeeper/conf/zoo.cfg
+RUN echo "dataDir=/var/lib/zookeeper" >> /etc/zookeeper/conf/zoo.cfg
+RUN echo "autopurge.snapRetainCount=30" >> /etc/zookeeper/conf/zoo.cfg
+RUN echo "server.1=192.168.5.2:2888:3888" >> /etc/zookeeper/conf/zoo.cfg
+RUN echo "server.2=192.168.5.3:2888:3888" >> /etc/zookeeper/conf/zoo.cfg
+
+RUN echo "1" > /etc/zookeeper/conf/myid
+
+RUN rm  /root/bin/kafka/config/server.properties
+RUN echo "broker.id=1" > /root/bin/kafka/config/server.properties
+RUN echo "num.network.threads=3" >> /root/bin/kafka/config/server.properties
+RUN echo "num.io.threads=8" >> /root/bin/kafka/config/server.properties
+RUN echo "socket.send.buffer.bytes=102400" >> /root/bin/kafka/config/server.properties
+RUN echo "socket.receive.buffer.bytes=102400" >> /root/bin/kafka/config/server.properties
+RUN echo "socket.request.max.bytes=104857600" >> /root/bin/kafka/config/server.properties
+RUN echo "log.dirs=/tmp/kafka-logs" >> /root/bin/kafka/config/server.properties
+RUN echo "num.partitions=1" >> /root/bin/kafka/config/server.properties
+RUN echo "num.recovery.threads.per.data.dir=1" >> /root/bin/kafka/config/server.properties
+
+RUN echo "zookeeper.connect=192.168.5.2:2181,192.168.5.3:2181" >> /root/bin/kafka/config/server.properties
+RUN echo "zookeeper.connection.timeout.ms=25000" >> /root/bin/kafka/config/server.properties
+RUN echo "zookeeper.session.timeout.ms=30000" >> /root/bin/kafka/config/server.properties
+RUN echo "zookeeper.sync.time.ms=2000" >> /root/bin/kafka/config/server.properties
+
+RUN echo "192.168.5.2 kafka.smartsend1" >> /etc/hosts
+RUN echo "192.168.5.3 kafka.smartsend2" >> /etc/hosts
+
+RUN  echo "nohup kafka/bin/kafka-server-start.sh /root/bin/kafka/config/server.properties > /root/log/kafka/kafka1.log 2>&1 &" > /root/bin/kafka.sh
+
+CMD service zookeeper start && /root/bin/kafka.sh && /root/bin/hbase/bin/hbase-daemon.sh --config "${HBASE_CONF_DIR}" start master && bash
